@@ -1,0 +1,36 @@
+.container {
+  width: 600px;
+  min-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  background-color: rgb(42, 42, 42);
+  border-radius: 3px;
+  transform: translateY(-80px);
+}
+
+.imageDiv {
+  border: 2px solid whitesmoke;
+  border-radius: 1000px;
+  overflow: hidden;
+}
+
+.textDetails {
+  padding: 30px;
+  margin-left: 30px;
+  color: #64e6c6;
+}
+
+.date {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+}
+
+.location {
+  width: 150px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}

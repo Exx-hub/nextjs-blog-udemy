@@ -1,0 +1,15 @@
+.jumbotron {
+  height: 25vh;
+  background-color: teal;
+  color: white;
+  font-size: 60px;
+  text-align: center;
+  padding-top: 40px;
+}
+
+.description {
+  width: 40%;
+  margin: 0 auto;
+  text-align: center;
+  transform: translateY(-50px);
+}

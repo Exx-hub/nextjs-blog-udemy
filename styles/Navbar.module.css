@@ -1,0 +1,15 @@
+.container {
+  height: 8vh;
+  background-color: black;
+  color: #1be0af;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+  /* margin-bottom: 20px; */
+}
+
+.logo {
+  color: #62fcd6;
+  font-size: 24px;
+}
