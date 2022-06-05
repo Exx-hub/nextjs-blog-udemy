@@ -1,12 +1,19 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 import CommentList from "./CommentList";
 import NewComment from "./NewComment";
 import styles from "../../styles/Comments.module.css";
+import { NotificationCtx } from "../../context/notification-context";
+import {
+  error,
+  pending,
+  reset,
+  success,
+} from "../../helpers/notification-util";
 
 function Comments(props) {
   const { eventId } = props;
-  console.log(eventId);
+  const { setState } = useContext(NotificationCtx);
 
   const [showComments, setShowComments] = useState(false);
 
@@ -15,24 +22,41 @@ function Comments(props) {
   }
 
   function addCommentHandler(commentData) {
-    // send data to API
-    console.log(commentData);
     const { email, name, text } = commentData;
 
-    fetch("/api/comments", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        name,
-        text,
-        eventId,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+    if (email && name && text) {
+      setState(pending);
+
+      fetch(`/api/comments/${eventId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          name,
+          text,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          if (data.data) {
+            setState(success);
+          }
+
+          if (data.error) {
+            setState(error);
+
+            throw new Error(data.error);
+          }
+
+          setTimeout(() => {
+            setShowComments(false);
+            setState(reset);
+          }, 2000);
+        });
+    }
   }
 
   return (
@@ -41,7 +65,7 @@ function Comments(props) {
         {showComments ? "Hide" : "Show"} Comments
       </button>
       {showComments && <NewComment onAddComment={addCommentHandler} />}
-      {showComments && <CommentList />}
+      {showComments && <CommentList eventId={eventId} />}
     </section>
   );
 }

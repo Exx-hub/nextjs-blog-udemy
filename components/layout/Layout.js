@@ -1,7 +1,11 @@
 import Head from "next/head";
+import { useContext } from "react";
+import { NotificationCtx } from "../../context/notification-context";
+import Notification from "../notification/Notification";
 import Navbar from "./Navbar";
 
 function Layout({ children }) {
+  const { state } = useContext(NotificationCtx);
   return (
     <>
       <Head>
@@ -14,6 +18,7 @@ function Layout({ children }) {
       </Head>
       <Navbar />
       <main>{children}</main>
+      <Notification />
     </>
   );
 }

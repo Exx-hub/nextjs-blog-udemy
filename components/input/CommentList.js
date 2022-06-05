@@ -1,34 +1,52 @@
 import styles from "../../styles/CommentList.module.css";
 import { useState, useEffect } from "react";
 
-function CommentList() {
+function CommentList({ eventId }) {
   const [comments, setComments] = useState([]);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetch("/api/comments")
+    setLoading(true);
+    fetch(`/api/comments/${eventId}`)
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data.data);
-        setComments(data.data);
+      .then((e) => {
+        console.log(e);
+
+        if (e.error) {
+          setError(true);
+        }
+
+        if (e.data) {
+          setComments(e.data);
+        }
+        setLoading(false);
       });
   }, []);
 
   return (
-    <ul className={styles.comments}>
-      {/* Render list of comments - fetched from API */}
-      {comments.length > 0 ? (
-        comments.map((item) => (
-          <li key={item.id}>
-            <p>{item.comment}</p>
-            <div>
-              By <address>{item.user}</address>
-            </div>
-          </li>
-        ))
+    <>
+      {loading ? (
+        <h1>Loading Data..</h1>
+      ) : error ? (
+        <h1>Error Fetching Data..</h1>
       ) : (
-        <h2>Write a comment!</h2>
+        <ul className={styles.comments}>
+          {comments.length > 0 ? (
+            comments.map((item) => (
+              <li key={item._id}>
+                <p>{item.comment}</p>
+                <div>
+                  By <address>{item.name}</address>
+                </div>
+              </li>
+            ))
+          ) : (
+            <h2>No Comments yet. Write a first one!</h2>
+          )}
+        </ul>
       )}
-    </ul>
+    </>
   );
 }
 
