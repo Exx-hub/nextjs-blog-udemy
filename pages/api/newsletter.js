@@ -20,6 +20,7 @@ export default async function handler(req, res) {
     // validate email, return 422 if invalid
     if (!email || !email.includes("@")) {
       res.status(422).json("Invalid Email Format.");
+      return;
     }
 
     // insert document to DB collection

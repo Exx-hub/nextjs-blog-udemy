@@ -1,14 +1,9 @@
 import EventList from "../../components/events/EventList";
 import axios from "axios";
-import Button from "../../components/layout/Button";
-import { useRouter } from "next/router";
 import TemplateButton from "../../components/layout/TemplateButton";
 import Head from "next/head";
 
 function EventFilter({ events, month, year }) {
-  const router = useRouter();
-  // console.log(events);
-
   const pageHeadData = (
     <Head>
       <title>Filtered Events</title>
@@ -92,47 +87,3 @@ export const getServerSideProps = async (context) => {
     },
   };
 };
-
-// const router = useRouter();
-//   const filterData = router.query.filter;
-//   console.log("filter data:", filterData);
-
-//   const filteredYear = filterData && +filterData[0];
-//   const filteredMonth = filterData && +filterData[1];
-
-//   const [events, setEvents] = useState([]);
-//   console.log(events);
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       const response = await axios.get(
-//         "https://nextjs-course-85a4e-default-rtdb.firebaseio.com/events.json"
-//       );
-
-//       let allEvents = [];
-//       for (let key in response.data) {
-//         allEvents.push(response.data[key]);
-//       }
-
-//       let filteredEvents = allEvents.filter((event) => {
-//         const eventDate = new Date(event.date);
-
-//         return (
-//           eventDate.getFullYear() === filteredYear &&
-//           eventDate.getMonth() === filteredMonth - 1
-//         );
-//       });
-
-//       if (filteredEvents.length > 0) {
-//         setEvents(filteredEvents);
-//       } else {
-//         setEvents(null);
-//       }
-//     };
-
-//     fetchData();
-//   }, []);
-
-//   if (!filterData) {
-//     return <h2>No Results Found</h2>;
-//   }
